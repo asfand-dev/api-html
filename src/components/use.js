@@ -32,8 +32,8 @@ export default () => (
             </div>
           </div>
           <p key="p2" className="page-content">
-            <a>Report an issue </a> | 
-            <a> Request a feature </a> | 
+            <a href="https://github.com/asfand-dev/swagger-theme-online/issues" target="_blank">Report an issue </a> | 
+            <a href="https://github.com/asfand-dev/swagger-theme-online/issues" target="_blank"> Request a feature </a> | 
             <a href="mailto:asfand.dev@gmail.com"> Contact us </a>
           </p>
         </QueueAnim>
