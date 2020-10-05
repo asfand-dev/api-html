@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "464ca1a3fdac608776cbd78d69bd85d7",
+    "revision": "184f95bfed3365f37d4581ac99608f90",
     "url": "/swagger-theme-online/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/swagger-theme-online/static/css/2.86a1bf4f.chunk.css"
   },
   {
-    "revision": "d976d9150ece57bbf5fd",
+    "revision": "79bc23a1078ec79218fa",
     "url": "/swagger-theme-online/static/css/main.27c09b05.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/swagger-theme-online/static/js/2.4dd333f1.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "d976d9150ece57bbf5fd",
-    "url": "/swagger-theme-online/static/js/main.44276f9a.chunk.js"
+    "revision": "79bc23a1078ec79218fa",
+    "url": "/swagger-theme-online/static/js/main.24c4e1ce.chunk.js"
   },
   {
     "revision": "348bb985d84555b91f01",
