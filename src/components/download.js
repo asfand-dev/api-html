@@ -30,7 +30,7 @@ export default () => {
     if (url.lastIndexOf('.json') > 3) {
       window.open(`https://swagger-theme.herokuapp.com/generate-swagger?url=${url}&download=1${getOptions()}`, '_blank');
     } else {
-      alert('Please enter a correct your with .json extension');
+      alert('Please enter a correct URL with .json extension');
     }
   }
   return (
