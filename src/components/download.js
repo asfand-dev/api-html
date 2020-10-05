@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { OverPack } from 'rc-scroll-anim';
 import QueueAnim from 'rc-queue-anim';
 import { Button, Input } from 'antd';
-import { FileTextTwoTone } from '@ant-design/icons';
+import { FileTextTwoTone, ThunderboltTwoTone, CrownTwoTone } from '@ant-design/icons';
 
 
 export default () => {
@@ -48,8 +48,8 @@ export default () => {
                 <span style={{float: 'right', color: '#1891ff', cursor: 'pointer' }} onClick={() => setShowOption(true)}>Options</span>
               ) : (
                 <div style={{display: 'flex', justifyContent: 'space-between', marginTop: 10}}>
-                  <Input size="middle" onChange={e => setLogo(e.target.value)} placeholder="Logo Url" prefix={<FileTextTwoTone />} style={{maxWidth: 275}} />
-                  <Input size="middle" onChange={e => setColor(e.target.value)} placeholder="Base Color" prefix={<FileTextTwoTone />} style={{maxWidth: 120}} />
+                  <Input size="middle" onChange={e => setLogo(e.target.value)} placeholder="Logo Url" prefix={<CrownTwoTone />} style={{maxWidth: 275}} />
+                  <Input size="middle" onChange={e => setColor(e.target.value)} placeholder="Base Color" prefix={<ThunderboltTwoTone />} style={{maxWidth: 120}} />
                 </div>
               )}
               <div style={{marginTop: 20, display: 'flex', justifyContent: 'center'}}>
