@@ -43,9 +43,9 @@ export default () => {
     <div>
       <div className="home-wrapper">
         <Banner isMobile={isMobile} />
+        <Download />
         <Feature isMobile={isMobile} />
         <Screenshot />
-        <Download />
         <Use />
       </div>
       <Footer />

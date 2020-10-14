@@ -44,20 +44,13 @@ svg g {
 }
 
 .banner-wrapper {
-  height: 526px;
+  padding-top: 100px;
+  padding-bottom: 10px;
   width: 100%;
-  max-width: 1500px;
-  margin: auto;
   position: relative;
+  display: flex;
+  justify-content: center;
   .banner-title-wrapper {
-    width: 40%;
-    max-width: 480px;
-    height: 245px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 8%;
-    margin: auto;
     z-index: 1;
     > * {
       will-change: transform;
@@ -66,9 +59,15 @@ svg g {
       font-family: "Futura", "Helvetica Neue For Number", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: 54px;
       margin: 12px 0;
+      text-align: center;
     }
     p {
       font-size: 20px;
+      text-align: center;
+    }
+    img {
+      width: 100%;
+      margin-top: 20px;
     }
     .button-wrapper {
       margin-top: 64px;
@@ -141,7 +140,7 @@ svg g {
 }
 
 .home-page {
-  margin: 50px auto;
+  margin: 10px auto;
   h2 {
     text-align: center;
     font-weight: 300;
@@ -274,6 +273,10 @@ svg g {
   }
 }
 
+.download-section {
+  margin-bottom: 200px;
+}
+
 
 .page-content {
   width: 760px;
@@ -333,4 +336,8 @@ svg g {
   75%, 100% {
     transform: translateX(178px);
   }
+}
+
+.ant-checkbox-wrapper + .ant-checkbox-wrapper {
+  margin-left: 0 !important;
 }
