@@ -9,7 +9,7 @@ export default () => (
       <div className="title-line-wrapper page2-line">
         <div className="title-line" />
       </div>
-      <h2><span>Build</span> Locally</h2>
+      <h2><span>Build</span> Locally (Coming soon)</h2>
       <OverPack>
         <QueueAnim key="queue" type="bottom" leaveReverse className="page2-content">
           <p key="p" className="page-content">
@@ -17,9 +17,9 @@ export default () => (
           </p>
           <div key="code1" className="home-code">
             <div>
-              npm i <span>swagger-theme</span> -g
+              npm i <span>api-html</span> -g
             </div>
-            <div>swag --url https://petstore.swagger.io/v2/swagger.json</div>
+            <div>api-html --url https://petstore.swagger.io/v2/swagger.json</div>
             <div>
               <span className="home-code-comment">
                 // The above command will generate the html files
@@ -27,7 +27,7 @@ export default () => (
             </div>
             <div>
               <span className="home-code-comment">
-                // <a href="https://www.npmjs.com/package/swagger-theme" target="_blank">View complete documentation</a>
+                // <a href="https://www.npmjs.com/package/api-html" target="_blank">View complete documentation</a>
               </span>
             </div>
           </div>
