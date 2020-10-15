@@ -68,7 +68,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "PUBLIC_URL=/swagger-theme-online/ node scripts/build.js",
+    "build": "PUBLIC_URL=/api-html/ node scripts/build.js",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
