@@ -222,14 +222,13 @@ export default () => {
   const previewHandler = () => {
     if (!fieldValues.url) return alert('Please enter a correct Source URL');
     const query = getQuery();
-    window.open(`http://localhost:8081/generate-html?${query}`, '_blank');
-    // window.open(`https://swagger-theme.herokuapp.com/generate-swagger?${query}`, '_blank');
+    window.open(`https://swagger-theme.herokuapp.com/generate-html?${query}`, '_blank');
   }
 
   const downloadHandler = () => {
     if (!fieldValues.url) return alert('Please enter a correct Source URL');
     const query = getQuery();
-    window.open(`http://localhost:8081/generate-html?download=1&${query}`, '_blank');
+    window.open(`https://swagger-theme.herokuapp.com/generate-html?download=1&${query}`, '_blank');
   }
 
   const importOptionsHandler = () => {
