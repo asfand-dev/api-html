@@ -9,7 +9,7 @@ export default () => (
       <div className="title-line-wrapper page2-line">
         <div className="title-line" />
       </div>
-      <h2><span>Build</span> Locally (Coming soon)</h2>
+      <h2><span>Build</span> Locally</h2>
       <OverPack>
         <QueueAnim key="queue" type="bottom" leaveReverse className="page2-content">
           <p key="p" className="page-content">
