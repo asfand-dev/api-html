@@ -34,7 +34,8 @@ export default () => (
           <p key="p2" className="page-content">
             <a href="https://github.com/asfand-dev/api-html/issues" target="_blank">Report an issue </a> | 
             <a href="https://github.com/asfand-dev/api-html/issues" target="_blank"> Request a feature </a> | 
-            <a href="mailto:asfand.dev@gmail.com"> Contact us </a>
+            <a href="mailto:asfand.dev@gmail.com"> Contact us </a> |
+            <a href="http://paypal.me/asfanddev" target="_blank"> Donate</a>
           </p>
         </QueueAnim>
       </OverPack>

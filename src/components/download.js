@@ -13,6 +13,7 @@ export default () => {
     isCoding: true,
     isSearch: true,
     isTryRequest: true,
+    isCreditLink: true,
   });
 
   const [isAdvance, setIsAdvance] = useState(false);
@@ -122,6 +123,13 @@ export default () => {
       advance: true,
     },
     {
+      name: 'isCreditLink',
+      type: 'checkbox',
+      label: <><b>Credit</b> link{fieldValues.isCreditLink ? '':<span>. Please <a href="http://paypal.me/asfanddev" target="_blank">donate</a> to support the project.</span>}</>,
+      style: {width: '100%'},
+      advance: true,
+    },
+    {
       name: 'customHeadScript',
       type: 'textarea',
       label: 'Custom Head Script, will be added to the head tag after all other scripts',
@@ -177,6 +185,7 @@ export default () => {
       isCoding,
       isSearch,
       isTryRequest,
+      isCreditLink,
       customHeadScript,
       customFootScript,
       apiVersions,
@@ -206,6 +215,7 @@ export default () => {
       isCoding,
       isSearch,
       isTryRequest,
+      isCreditLink,
       customHeadScript,
       customFootScript,
       apiVersions,

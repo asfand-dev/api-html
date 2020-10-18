@@ -74,18 +74,17 @@ The options should be in a json file, If you don't pass the `--option` parameter
 
 | Name | Default Value | Description |
 |---|---|---|---|
-|`navTopTitle`| PATHS NAVIGATION  | Set the title of top navigation
-|`customHeadScript`| ''  | Add custom script to the head tag
-|`customFootScript`| ''  | Add custom script to the foot tag
-|`isBackToTopButton`| `true`  | Hide or show the `BackToTop` button
-|`logo`| 'swagger-logo'  | Point a logo to a local file
-|`logoUrl`| ''  | Point a logo to the URL
 |`baseColor`| `#6e9a04`  | Set the base color of the theme
 |`textColor`| `#FFF`  | Set the text color of the theme
-|`pageTitle`| the  `title` from the `swagger.json` file  | Set the page title shown on browser title bar.
+|`logo`| 'swagger-logo'  | Point a logo to a local file
+|`logoUrl`| ''  | Point a logo to the URL
 |`isCoding`| `true`  | Show or Hide the coding section in the request
 |`isSearch`| `true`  | Show or Hide the Search feature
 |`isTryRequest`| `true`  | Show or Hide the "try out" button in the request
+|`isBackToTopButton`| `true`  | Hide or show the `BackToTop` button
+|`pageTitle`| the  `title` from the `swagger.json` file  | Set the page title shown on browser title bar.
+|`customHeadScript`| ''  | Add custom script to the head tag
+|`customFootScript`| ''  | Add custom script to the foot tag
 |`pageTags`| ''  | Represent the meta keywords of the page, Each keyword should be seperated by a comma. Meta Keywords are helpful for the page SEO.
 |`pageDescription`| ''  | Represent the meta description of page
 |`apiVersions`| ''  | API Versions, enter in the following format:<br/>(Name)[URL]<br/>(Name)[URL]<br/>...<br/>Exp:<br/>(V1)[https://zamacall.io/docs/v1/]<br/>(V2)[https://zamacall.io/docs/v2/]
