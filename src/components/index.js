@@ -25,11 +25,6 @@ export default () => {
     });
 
     if (process.env.NODE_ENV === 'production') {
-      // Warming up heroku app, because of free version go to sleep after 30 minutes of inavtiviry
-      fetch('https://swagger-theme.herokuapp.com/generate-html?url=https://petstore.swagger.io/v2/swagger.json')
-      .then(e => e.text())
-      .then(e => e)
-
       ReactGA.initialize('UA-179823339-1', {
         debug: false,
         testMode: false,

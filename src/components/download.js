@@ -3,6 +3,7 @@ import { OverPack } from 'rc-scroll-anim';
 import QueueAnim from 'rc-queue-anim';
 import { Button, Input, Select, Tooltip, Checkbox } from 'antd';
 import { FileTextTwoTone, ThunderboltTwoTone, CrownTwoTone, InfoCircleOutlined } from '@ant-design/icons';
+import ReactGA from 'react-ga';
 
 export default () => {
   const [fieldValues, setFieldValues] = useState({
@@ -232,13 +233,20 @@ export default () => {
   const previewHandler = () => {
     if (!fieldValues.url) return alert('Please enter a correct Source URL');
     const query = getQuery();
-    window.open(`https://swagger-theme.herokuapp.com/generate-html?${query}`, '_blank');
+    window.open(`https://api-html.herokuapp.com/generate-html?${query}`, '_blank');
+
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.pageview(`generate-html?${query}`);
+    }
   }
 
   const downloadHandler = () => {
     if (!fieldValues.url) return alert('Please enter a correct Source URL');
     const query = getQuery();
-    window.open(`https://swagger-theme.herokuapp.com/generate-html?download=1&${query}`, '_blank');
+    window.open(`https://api-html.herokuapp.com/generate-html?download=1&${query}`, '_blank');
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.pageview(`generate-html?download=1&${query}`);
+    }
   }
 
   const importOptionsHandler = () => {
