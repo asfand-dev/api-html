@@ -15,6 +15,7 @@ export default () => {
     isSearch: true,
     isTryRequest: true,
     isCreditLink: true,
+    theme: 'compact',
   });
 
   const [isAdvance, setIsAdvance] = useState(false);
@@ -51,10 +52,17 @@ export default () => {
       swagger: true,
     },
     {
+      name: 'theme',
+      label: 'Theme',
+      type: 'select',
+      style: {maxWidth: 'calc(50% - 5px)'},
+      options: [['compact', 'Compact'], ['basic', 'Basic']],
+    },
+    {
       name: 'logo',
       type: 'text',
       label: 'Logo Url / Local Logo Name',
-      style: {maxWidth: 'calc(50% - 5px)'},
+      style: {maxWidth: '100%'},
       tooltip: (
       <>
         <b>Local logo name</b> only works with the <b>Download</b> action, not with the <b>Preview</b> action.<br /> After downloading the <b>HTML</b> file, the logo file should be placed in the same folder, the path of local logo file should be relative to the <b>HTML</b> file.
@@ -176,21 +184,7 @@ export default () => {
       type,
       version,
       inputType,
-      logo,
-      baseColor,
-      textColor,
-      pageTitle,
-      pageTags,
-      pageDescription,
-      isBackToTopButton,
-      isCoding,
-      isSearch,
-      isTryRequest,
-      isCreditLink,
-      customHeadScript,
-      customFootScript,
-      apiVersions,
-      headerMenuItems,
+      ...options
     } = fieldValues;
 
     const values = { url, type };
@@ -204,24 +198,6 @@ export default () => {
         values.version = version || 2;
       }
     }
-
-    let options = {
-      logo,
-      baseColor,
-      textColor,
-      pageTitle,
-      pageTags,
-      pageDescription,
-      isBackToTopButton,
-      isCoding,
-      isSearch,
-      isTryRequest,
-      isCreditLink,
-      customHeadScript,
-      customFootScript,
-      apiVersions,
-      headerMenuItems,
-    };
 
     if (options) {
       values.options = JSON.stringify(options);

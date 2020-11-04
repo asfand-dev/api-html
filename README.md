@@ -73,7 +73,8 @@ The options should be in a json file, If you don't pass the `--option` parameter
 
 
 | Name | Default Value | Description |
-|---|---|---|---|
+|---|---|---|
+|`theme`| `compact`  | Set the UI theme, values are: "compact" and "basic".
 |`baseColor`| `#6e9a04`  | Set the base color of the theme
 |`textColor`| `#FFF`  | Set the text color of the theme
 |`logo`| 'swagger-logo'  | Point a logo to a local file
@@ -82,6 +83,7 @@ The options should be in a json file, If you don't pass the `--option` parameter
 |`isSearch`| `true`  | Show or Hide the Search feature
 |`isTryRequest`| `true`  | Show or Hide the "try out" button in the request
 |`isBackToTopButton`| `true`  | Hide or show the `BackToTop` button
+|`isCreditLink`| `true`  | Hide or show the `Credit` link below the navigation bar
 |`pageTitle`| the  `title` from the `swagger.json` file  | Set the page title shown on browser title bar.
 |`customHeadScript`| ''  | Add custom script to the head tag
 |`customFootScript`| ''  | Add custom script to the foot tag
@@ -103,6 +105,7 @@ The options should be in a json file, If you don't pass the `--option` parameter
 
 
 ## Change log
++ Added A new Compact UI Theme; Nice, Clean, Faster and lightweight.
 + Added support for `IO Docs` source file
 + Added support for `WADL` source file
 + Added support for `RAML` source file
