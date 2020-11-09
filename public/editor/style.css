@@ -1,0 +1,169 @@
+:root {
+  --color-base: #6e9a04;
+  --color-base-light: #6e9a04;
+  --color-text: #FFF;
+}
+
+aside * {
+  z-index: 2;
+}
+
+aside div {
+  position: relative;
+}
+
+aside::before {
+  content: ' ';
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 320px;
+  height: 100vh;
+  z-index: 1;
+  opacity: 0.2;
+  background-image: linear-gradient(to bottom, #888, rgba(0, 0, 0, 0.8)), url(https://cdn.jsdelivr.net/npm/api-html@1.1.1/themes/compact/assets/img/patterns/5.svg);
+  background-position: 50% 0;
+  background-size: 500px auto;
+}
+
+.main-loader {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+}
+
+.main-loader svg {
+  position: relative;
+  width: 40%;
+  top: 20%;
+  left: 30%;
+}
+
+.search-result a > strong, .search-result a > span {
+  display: inline-block;
+}
+
+@media all and (max-width: 1350px) and (min-width: 1050px) {
+  aside::before {
+    width: 300px;
+  }
+}
+
+@media all and (max-width: 1050px) {
+  aside::before {
+    width: 0;
+  }
+}
+
+.zama-popup {
+  width: 230px;
+  position: absolute;
+  background: white;
+  padding: 8px 18px 15px 18px;
+  border: 1px solid #e4e4e4;
+  z-index: 10000;
+  overflow: scroll;
+  max-height: 600px;
+  box-shadow: 0 5px 12px rgba(0,0,0,.15);
+}
+
+.zama-popup:empty {
+  display: none;
+}
+
+.zama-select:hover {
+  outline: 1px dashed red !important;
+}
+
+.zama-selected, .zama-selected:hover {
+  outline: 1px solid red !important;
+}
+
+.zama-unit.uk-icon {
+  color: #999;
+}
+
+.field-padding {
+  max-width: 400px;
+  position: relative;
+  padding: 10px;
+  border: 1px solid #e5e5e5;
+  height: 185px;
+}
+
+.field-padding > span {
+  position: absolute;
+  top: calc(50% - 12px);
+  left: calc(50% - 30px);
+}
+
+.field-padding > input {
+  position: absolute;
+  width: 50px;
+  height: 30px;
+}
+
+.field-padding-top {
+  top: 45px;
+  left: calc(50% - 25px);
+}
+
+.field-padding-left {
+  left: 10px;
+  top: 50%;
+}
+
+.field-padding-right {
+  right: 10px;
+  top: 50%;
+}
+
+.field-padding-bottom {
+  bottom: 10px;
+  left: calc(50% - 25px);
+}
+
+.zama-chips {
+  margin: 5px 0;
+  padding: 10px 4px;
+  border: 1px solid #e5e5e5;
+}
+
+.zama-chips a {
+  padding: 2px 8px;
+  border-radius: 10px;
+  background-color: #e5e5e5;
+}
+
+.uk-form-icon-flip {
+  right: 5px;
+}
+
+.background-pattern {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.background-pattern-block {
+  width: calc(50% - 5px);
+  height: 80px;
+  margin: 5px 0;
+  background-color: var(--color-base);
+  background-size: 200% 200%;
+  background-position: bottom;
+  cursor: pointer;
+}
+
+.background-pattern-block-selected {
+  border: 2px solid red;
+}
+
+.uk-form-icon-flip~.uk-input {
+  padding-right: 50px!important;
+}

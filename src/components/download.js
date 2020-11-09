@@ -259,6 +259,14 @@ export default () => {
     a.click();
   }
 
+  const customizeTheme = () => {
+    window.open('./editor', '_blank', 'width=1200,menubar=no,toolbar=no,location=no,resizable=yes,scrollbars=yes,status=no');
+
+    window.addEventListener('message', (event) => {
+      setFieldValue('customFootScript', event.data);
+    });
+  }
+
   if (fieldValues.type !== 'swagger') {
     fields = fields.filter(({ swagger = false }) => !swagger);
   }
@@ -330,14 +338,18 @@ export default () => {
                     )
                   ))}
                 </div>
-                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 5 }}>
+                  <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={customizeTheme}>
+                    <Tooltip title={<><h3 style={{color: 'white'}}>Important Message!</h3>A new window will be open, where you can customize the UI. <b>Close</b> the <b>editor</b> window once you are done with the changes. The UI changes will be converted to <b>CSS Rules</b> and will be added to the <b>Custom Foot Script</b> field in the <b>Advance Options</b>. <br />You will see the new UI changes in the <b>Preview</b> and <b>Download</b> after closing the <b>Editor</b> window.</>}>Customize Theme</Tooltip>  
+                  </span>
+                  <span style={{ padding: '0 10px' }}>|</span>
                   <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={exportOptionsHandler}>Export Options</span>
-                  <span style={{padding: '0 10px'}}>|</span>
+                  <span style={{ padding: '0 10px' }}>|</span>
                   <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={importOptionsHandler}>Import Options</span>
-                  <span style={{padding: '0 10px'}}>|</span>
+                  <span style={{ padding: '0 10px' }}>|</span>
                   <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={() => setIsAdvance(!isAdvance)}>Advance Options</span>
                 </div>
-              <div style={{marginTop: 20, display: 'flex', justifyContent: 'center'}}>
+              <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <Button onClick={previewHandler} style={{ margin: '0 16px' }} type="primary" ghost>
                   Preview
                 </Button>

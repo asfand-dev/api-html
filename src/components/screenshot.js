@@ -19,8 +19,8 @@ export default () => {
         <h2>Demo of <span>Pet Store</span></h2>
         <OverPack>
           <QueueAnim key="queue" type="bottom" leaveReverse className="zama-section">
-            <div key="button" style={{marginTop: 20, cursor: 'pointer'}} onClick={demoHandler}>
-              <img src={SCREENSHOT_PNG} style={{maxWidth: 800}} alt='swagger theme screenshot' />
+            <div key="button" style={{ marginTop: 20, cursor: 'pointer' }} onClick={demoHandler}>
+              <img src={SCREENSHOT_PNG} style={{ maxWidth: 800, width: '100%' }} alt='swagger theme screenshot' />
             </div>
           </QueueAnim>
         </OverPack>
