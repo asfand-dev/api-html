@@ -44,12 +44,13 @@ const elements = {
     align: 'top right',
     distance: { x: 10, y: 100 },
     cssSelector: 'aside::before',
+    injectableSelector: 'aside',
     values: { [PROPS.BACKGROUND_PATTERN]: { isActive: true, opacity: 80, pattern: '5.svg' } },
   },
   sidebarMenuItem: {
     id: 'sidebarMenuItem',
     title: 'Sidebar Menu Item',
-    cssSelector: 'aside .uk-nav > li > a',
+    cssSelector: 'aside .uk-nav-default > li > a',
     tooltipAlign: 'right',
     align: 'top right',
     distance: { x: 40, y: -20 },
@@ -65,7 +66,7 @@ const elements = {
   sidebarMenuItemActive: {
     id: 'sidebarMenuItemActive',
     title: 'Sidebar Menu Item Active',
-    cssSelector: 'aside .uk-nav > li.uk-active > a',
+    cssSelector: 'aside .uk-nav-default > li.uk-active > a',
     tooltipAlign: 'right',
     align: 'top right',
     distance: { x: 40, y: -20 },
@@ -81,7 +82,7 @@ const elements = {
   sidebarSubMenuItem: {
     id: 'sidebarSubMenuItem',
     title: 'Sidebar Sub Menu Item',
-    cssSelector: 'aside .uk-nav .uk-nav-sub a',
+    cssSelector: 'aside .uk-nav-default .uk-nav-sub a',
     tooltipAlign: 'right',
     align: 'top right',
     distance: { x: 40, y: -200 },
@@ -97,7 +98,7 @@ const elements = {
   sidebarSubMenuItemActive: {
     id: 'sidebarSubMenuItemActive',
     title: 'Sidebar Sub Menu Item Active',
-    cssSelector: 'aside .uk-nav .uk-nav-sub .uk-active a',
+    cssSelector: 'aside .uk-nav-default .uk-nav-sub .uk-active a',
     tooltipAlign: 'right',
     align: 'top right',
     distance: { x: 40, y: -20 },
