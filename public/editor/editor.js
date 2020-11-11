@@ -5,10 +5,24 @@ class Editor {
     this.history = {};
     this.assetsRoot = 'https://cdn.jsdelivr.net/npm/api-html@1.1.1/themes/compact';
 
+    this.injectEditorElements();
     this.attachEvents();
     this.attachPopup();
-    this.attachToolTips();
     this.loadLibraries();
+  }
+
+  /**
+   * Inject the selectable class and unique Id for each editable element based on the cssSelector
+   * Attach the tooltip to all the selectable elements
+  */
+  injectEditorElements() {
+    const elemenetsArr = Object.keys(elements).map(e => elements[e]);
+    elemenetsArr.forEach(({ id = '', cssSelector = '', injectableSelector = '', tooltipAlign = 'top', title = 'Click to Edit' }) => {
+      $(injectableSelector || cssSelector)
+        .addClass('zama-select')
+        .attr('data-zama-id', id)
+        .attr('uk-tooltip', `title:${title}; pos: ${tooltipAlign}`)
+    });
   }
 
   generateBackgroundPatterns({ title, value, id }) {
@@ -579,16 +593,6 @@ class Editor {
   */
   getSelectedEle(id) {
     return $(`.zama-selected[data-zama-id="${id || this.selectedId}"]`);
-  }
-
-  /**
-   * Attach the tooltip to all the selectable elements
-  */
-  attachToolTips() {
-    $('.zama-select').toArray().forEach(e => {
-      const { tooltipAlign = 'top', title = 'Click to Edit' } = this.getData($(e).attr('data-zama-id'));
-      $(e).attr('uk-tooltip', `title:${title}; pos: ${tooltipAlign}`)
-    });
   }
 
   /**
