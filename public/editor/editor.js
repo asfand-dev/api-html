@@ -3,7 +3,7 @@ class Editor {
     this.selectedId = null;
     this.appliedProps = {};
     this.history = {};
-    this.assetsRoot = 'https://cdn.jsdelivr.net/npm/api-html@1.1.1/themes/compact';
+    this.assetsRoot = 'https://cdn.jsdelivr.net/npm/api-html@1.1.2/themes/compact';
 
     this.injectEditorElements();
     this.attachEvents();

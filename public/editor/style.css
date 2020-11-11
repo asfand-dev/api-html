@@ -22,7 +22,7 @@ aside::before {
   height: 100vh;
   z-index: 1;
   opacity: 0.2;
-  background-image: linear-gradient(to bottom, #888, rgba(0, 0, 0, 0.8)), url(https://cdn.jsdelivr.net/npm/api-html@1.1.1/themes/compact/assets/img/patterns/5.svg);
+  background-image: linear-gradient(to bottom, #888, rgba(0, 0, 0, 0.8)), url(https://cdn.jsdelivr.net/npm/api-html@1.1.2/themes/compact/assets/img/patterns/5.svg);
   background-position: 50% 0;
   background-size: 500px auto;
 }
