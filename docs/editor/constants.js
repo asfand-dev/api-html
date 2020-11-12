@@ -14,7 +14,8 @@ const PROPS = {
   TOGGLE: 13,
   TEXT_CASE: 14,
   BACKGROUND_PATTERN: 15,
-  BORDER_RADIUS: 16,
+  BORDER: 16,
+  BORDER_RADIUS: 17,
 };
 
 const elements = {
@@ -263,7 +264,7 @@ const elements = {
     tooltipAlign: 'right',
     align: 'bottom center',
     distance: { y: 20 },
-    props: [PROPS.FONT_SIZE, PROPS.PADDING, PROPS.MARGIN, PROPS.BORDER_RADIUS, PROPS.TEXT_COLOR, PROPS.BACKGROUND_COLOR, PROPS.TEXT_CASE],
+    props: [PROPS.FONT_SIZE, PROPS.PADDING, PROPS.MARGIN, PROPS.BORDER, PROPS.BORDER_RADIUS, PROPS.TEXT_COLOR, PROPS.BACKGROUND_COLOR, PROPS.TEXT_CASE],
     values: {
       [PROPS.FONT_SIZE]: { value: 10, isBold: true, isItalic: false, isUnderline: false },
       [PROPS.TEXT_COLOR]: { value: 'white' },
@@ -271,7 +272,8 @@ const elements = {
       [PROPS.BORDER_RADIUS]: { top: 15, left: 15, right: 15, bottom: 15, unit: 'px' },
       [PROPS.MARGIN]: { top: 20, left: 0, right: 0, bottom: 20, unit: 'px' },
       [PROPS.PADDING]: { top: 3, left: 7, right: 7, bottom: 3, unit: 'px' },
-      [PROPS.BACKGROUND_COLOR]: { value: '#6e9a04', hint: 'This is the base color, which will be converted to the color you provide in the main api-html form while generating HTML from your api-spec. If you change this color then the changed color will be used instead of base color.' },
+      [PROPS.BORDER]: { top: 1, right: 1, bottom: 1, left: 1, unit: 'px', type: 'solid', color: window.color.base },
+      [PROPS.BACKGROUND_COLOR]: { value: window.color.base, hint: 'This is the base color, which will be converted to the color you provide in the main api-html form while generating HTML from your api-spec. If you change this color then the changed color will be used instead of base color.' },
     },
   },
   projectSource: {
@@ -281,13 +283,15 @@ const elements = {
     tooltipAlign: 'right',
     align: 'bottom center',
     distance: { y: 20 },
-    props: [PROPS.FONT_SIZE, PROPS.PADDING, PROPS.MARGIN, PROPS.BORDER_RADIUS, PROPS.TEXT_CASE],
+    props: [PROPS.FONT_SIZE, PROPS.TEXT_COLOR, PROPS.PADDING, PROPS.MARGIN, PROPS.BORDER, PROPS.BORDER_RADIUS, PROPS.TEXT_CASE],
     values: {
       [PROPS.FONT_SIZE]: { value: 10, isBold: true, isItalic: false, isUnderline: false },
       [PROPS.TEXT_CASE]: { value: 'capitalize' },
       [PROPS.BORDER_RADIUS]: { top: 15, left: 15, right: 15, bottom: 15, unit: 'px' },
       [PROPS.MARGIN]: { top: 20, left: 0, right: 0, bottom: 20, unit: 'px' },
       [PROPS.PADDING]: { top: 3, left: 7, right: 7, bottom: 3, unit: 'px' },
+      [PROPS.BORDER]: { top: 1, right: 1, bottom: 1, left: 1, unit: 'px', type: 'solid', color: '#fca130' },
+      [PROPS.TEXT_COLOR]: { value: '#fca130' },
     },
   },
   tagTitle: {
@@ -410,26 +414,10 @@ const elements = {
     props: [PROPS.FONT_SIZE, PROPS.PADDING, PROPS.TEXT_COLOR, PROPS.TEXT_CASE],
     values: {
       [PROPS.FONT_SIZE]: { value: 16, isBold: false, isItalic: false, isUnderline: false },
-      [PROPS.TEXT_COLOR]: { value: '#6e9a04', hint: 'This is the base color, which will be converted to the color you provide in the main api-html form while generating HTML from your api-spec. If you change this color then the changed color will be used instead of base color.' },
+      [PROPS.TEXT_COLOR]: { value: window.color.base, hint: 'This is the base color, which will be converted to the color you provide in the main api-html form while generating HTML from your api-spec. If you change this color then the changed color will be used instead of base color.' },
       [PROPS.TEXT_CASE]: { value: 'none' },
       [PROPS.MARGIN]: { top: 0, left: 0, right: 0, bottom: 0, unit: 'px' },
       [PROPS.PADDING]: { top: 0, left: 0, right: 0, bottom: 0, unit: 'px' },
-    },
-  },
-  pathTabActive: {
-    id: 'pathTabActive',
-    title: 'Tab Active',
-    cssSelector: '.path-tabs li.uk-active > a',
-    tooltipAlign: 'bottom',
-    align: 'bottom center',
-    distance: { y: 5 },
-    props: [PROPS.FONT_SIZE, PROPS.PADDING, PROPS.TEXT_COLOR, PROPS.TEXT_CASE],
-    values: {
-      [PROPS.FONT_SIZE]: { value: 14, isBold: true, isItalic: false, isUnderline: false },
-      [PROPS.TEXT_COLOR]: { value: '#333' },
-      [PROPS.TEXT_CASE]: { value: 'uppercase' },
-      [PROPS.MARGIN]: { top: 0, left: 0, right: 0, bottom: 2, unit: 'px' },
-      [PROPS.PADDING]: { top: 5, left: 10, right: 10, bottom: 5, unit: 'px' },
     },
   },
   pathTab: {
@@ -446,6 +434,23 @@ const elements = {
       [PROPS.TEXT_CASE]: { value: 'uppercase' },
       [PROPS.MARGIN]: { top: 0, left: 0, right: 0, bottom: 2, unit: 'px' },
       [PROPS.PADDING]: { top: 5, left: 10, right: 10, bottom: 5, unit: 'px' },
+    },
+  },
+  pathTabActive: {
+    id: 'pathTabActive',
+    title: 'Tab Active',
+    cssSelector: '.path-tabs li.uk-active > a',
+    tooltipAlign: 'bottom',
+    align: 'bottom center',
+    distance: { y: 5 },
+    props: [PROPS.FONT_SIZE, PROPS.PADDING, PROPS.TEXT_COLOR, PROPS.BORDER, PROPS.TEXT_CASE],
+    values: {
+      [PROPS.FONT_SIZE]: { value: 14, isBold: true, isItalic: false, isUnderline: false },
+      [PROPS.TEXT_COLOR]: { value: '#333' },
+      [PROPS.TEXT_CASE]: { value: 'uppercase' },
+      [PROPS.MARGIN]: { top: 0, left: 0, right: 0, bottom: 2, unit: 'px' },
+      [PROPS.PADDING]: { top: 5, left: 10, right: 10, bottom: 5, unit: 'px' },
+      [PROPS.BORDER]: { bottom: 2, color: window.color.base },
     },
   },
   pathRequestContainer: {
@@ -656,7 +661,7 @@ const elements = {
     id: 'pathResponseCodeBox',
     title: 'Codebox ',
     distance: { y: 20 },
-    cssSelector: '.path .path-tab-response .blocks .blocks-block .hljs',
+    cssSelector: '.path .path-tab-response .blocks .blocks-block .language-javascript',
     tooltipAlign: 'top',
     align: 'above center',
     props: [PROPS.BACKGROUND_COLOR, PROPS.PADDING, PROPS.MARGIN, PROPS.BORDER_RADIUS],

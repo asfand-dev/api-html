@@ -3,6 +3,7 @@ class Editor {
     this.selectedId = null;
     this.appliedProps = {};
     this.history = {};
+    this.textChangeHistory = {};
     this.assetsRoot = 'https://cdn.jsdelivr.net/npm/api-html@1.1.2/themes/compact';
 
     this.injectEditorElements();
@@ -23,6 +24,10 @@ class Editor {
         .attr('data-zama-id', id)
         .attr('uk-tooltip', `title:${title}; pos: ${tooltipAlign}`)
     });
+
+    ['.project-details', 'h2', 'h3'].forEach(e => {
+      $(e).attr('contenteditable', true);
+    })
   }
 
   generateBackgroundPatterns({ title, value, id }) {
@@ -84,7 +89,7 @@ class Editor {
             <div uk-dropdown="mode: click; pos: bottom-right" style="max-width: 150px">${hint}</div>    
           ` : ''}
         </label>
-        <div class="uk-inline" id="${id}">
+        <div class="uk-inline"${id ? ` id="${id}"` : ''}>
           ${ isUnit ? `<a class="uk-form-icon uk-form-icon-flip zama-unit" href="#" uk-icon="icon: chevron-down"><span class="value">${unit}</span></a>` : '' }
           <input class="uk-input" type="text" value="${value}" placeholder="Enter ${title}">
         </div>
@@ -96,7 +101,7 @@ class Editor {
   generateSelectField({ title, value: _value = {}, id }) {
     const { value: selectedValue = '', options = [], hint = '' } = _value || {};
     return `
-      <div class="uk-margin" id="${id}">
+      <div class="uk-margin"${id ? ` id="${id}"` : ''}>
         <label class="uk-form-label">
           ${title}
           ${hint ? `
@@ -114,7 +119,7 @@ class Editor {
   generateFontField({ title, value: _value = {}, id }) {
     const { value = '', unit = 'px', isBold = false, isItalic = false, isUnderline = false, hint = '' } = _value || {};
     return `
-        <div class="uk-margin zama-units" id="${id}">
+        <div class="uk-margin zama-units"${id ? ` id="${id}"` : ''}>
           <label class="uk-form-label">
             ${title}
             ${hint ? `
@@ -162,10 +167,37 @@ class Editor {
     `;
   }
 
+  generateBorderField({ title, value = {}, id }) {
+    const { top = 0, left = 0, right = 0, bottom = 0, unit = 'px', color = window.color.base, type = 'solid', hint = '' } = value;
+
+    return `
+      <div class="uk-margin field zama-units" id="${id}">
+        <label class="uk-form-label">
+          ${title}
+          ${hint ? `
+            <span uk-icon="info" style="float: right;"></span>
+            <div uk-dropdown="mode: click; pos: bottom-right" style="max-width: 150px">${hint}</div>    
+          ` : ''}
+        </label>
+        <div class="field-padding field-border">
+          Unit: <a class="zama-unit" href="#" uk-icon="icon: chevron-down" style="float: right"><span class="value">px</span></a>
+          ${this.generateSelectField({ title: 'Type', value: { value: type, options: [['solid', 'Solid'], ['dotted', 'Dotted'], ['dashed', 'Dashed'], ['double', 'Double']] } })}
+          ${this.generateColorField({ title: 'Color', value: { value: color } })}
+          <span uk-icon="icon: plus; ratio: 3" style="color: #d4d3d3"></span>
+          <input class="field-padding-top" type="number" value="${top}"/>
+          <input class="field-padding-left" type="number" value="${left}"/>
+          <input class="field-padding-right" type="number" value="${right}"/>
+          <input class="field-padding-bottom" type="number" value="${bottom}"/>
+        </div>
+        ${this.generateUnits()}
+      </div>
+    `;
+  }
+
   generateColorField({ title, value: _value = '', id }) {
     const { value = '', hint = '' } = _value;
     return `
-      <div class="uk-margin" id="${id}">
+      <div class="uk-margin"${id ? ` id="${id}"` : ''}>
         <label class="uk-form-label">
           ${title}
           ${hint ? `
@@ -195,6 +227,16 @@ class Editor {
       const isActive = $('.background-pattern-active')[0].checked;
 
       return { isActive, opacity, pattern, url };
+    } else if (type === PROPS.BORDER) {
+      const top = $(`#field-id-${type} .field-padding-top`).val()
+      const left = $(`#field-id-${type} .field-padding-left`).val()
+      const right = $(`#field-id-${type} .field-padding-right`).val()
+      const bottom = $(`#field-id-${type} .field-padding-bottom`).val()
+      const unit = $(`#field-id-${type} .zama-unit .value`).text();
+      const color = $(`#field-id-${type} input.color-picker`).val();
+      const borderType = $(`#field-id-${type} select`).val();
+
+      return { top, left, right, bottom, color, type: borderType, unit };
     } else if (type === PROPS.TEXT_CASE) {
       const value = $(`#field-id-${type} select`).val()
       return { value };
@@ -235,6 +277,19 @@ class Editor {
           title: 'Border Rounds',
           value: values[PROPS.BORDER_RADIUS],
         });
+      } else if (e === PROPS.BORDER) {
+        html = this.generateBorderField({
+          id: `field-id-${PROPS.BORDER}`,
+          title: 'Border',
+          value: values[PROPS.BORDER],
+        });
+
+        onCompleteStack.push(() => {
+          $('.color-picker').spectrum({
+            type: "component",
+            showPalette: false,
+          });
+        })
       } else if (e === PROPS.IMAGE_URL) {
         html = this.generateTextField({
           id: `field-id-${PROPS.IMAGE_URL}`,
@@ -467,6 +522,15 @@ class Editor {
       } else if (type === PROPS.BORDER_RADIUS) {
         const { top = 0, left = 0, right = 0, bottom = 0, unit = 'px' } = values;
         return `border-radius: ${top}${unit} ${right}${unit} ${bottom}${unit} ${left}${unit} !important`;
+      } else if (type === PROPS.BORDER) {
+        const { top = 0, left = 0, right = 0, bottom = 0, unit = 'px', color = '', type: borderType = 'solid' } = values;
+        const border = [
+          `border-top: ${top}${unit} ${borderType} ${color} !important`,
+          `border-right: ${right}${unit} ${borderType} ${color} !important`,
+          `border-bottom: ${bottom}${unit} ${borderType} ${color} !important`,
+          `border-left: ${left}${unit} ${borderType} ${color} !important`,
+        ];
+        return border.join(';');
       } else if (type === PROPS.IMAGE_URL) {
         const { value } = values;
 
@@ -599,7 +663,7 @@ class Editor {
    * Attach the click event to the selectable elements
   */
   attachEvents() {
-    $('.zama-select').click((e) => {
+    $('.zama-select').dblclick((e) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -626,6 +690,31 @@ class Editor {
 
       // Render the popup on the page
       this.createPopup()
+    });
+
+    $('main, header, aside').click((e) => {
+      this.hidePopup();
+    });
+
+    $('*[contenteditable=true]').focus((e) => {
+      const ele = e.currentTarget;
+      const oldText = $(ele).html();
+      $(ele).attr('data-old-text', oldText);
+    });
+
+    $('*[contenteditable=true]').blur((e) => {
+      const ele = e.currentTarget;
+      const oldText = $(ele).attr('data-old-text');
+      const newText = $(ele).html();
+
+      if (oldText !== newText) {
+        const cssSelector = this.getCssSelector(ele);
+
+        this.textChangeHistory[cssSelector] = {
+          oldText,
+          newText,
+        };
+      }
     });
   }
 
@@ -697,10 +786,57 @@ class Editor {
     $('.zama-popup').hide();
   }
 
+  /**
+   * Trigger a message to the parent window on change
+  */
   postMessageToParentWindow() {
     let allCssRules = Object.keys(this.history).map(e => this.history[e].cssRules).join('\n');
-    allCssRules = `<style>\n${allCssRules}\n</style>`;
-    if (window.opener) window.opener.postMessage(allCssRules, '*');
+    let allJsScripts = Object.keys(this.textChangeHistory).map(e => (
+      `$("${e}").html(\`${this.textChangeHistory[e].newText.replace(/`/g, '\\`')}\`);`
+    )).join('\n');
+    
+    if (allCssRules) {
+      allCssRules = `<style>\n${allCssRules}\n</style>\n`;
+    }
+
+    if (allJsScripts) {
+      allJsScripts = `<script>\n${allJsScripts}\n</script>\n`;
+    }
+
+    if (window.opener) window.opener.postMessage(allCssRules + allJsScripts, '*');
+  }
+
+  /**
+   * Get the css selector of the element, the selector is unique and will only target the element passed to this function.
+  */
+  getCssSelector(ele) {
+    if (!(ele instanceof Element)) return;
+
+    let path = [];
+    while (ele.nodeType === Node.ELEMENT_NODE) {
+      let selector = ele.nodeName.toLowerCase();
+
+      if (ele.id) {
+        selector += '#' + ele.id;
+        path.unshift(selector);
+        break;
+      } else {
+        let sib = ele, nth = 1;
+
+        while (sib = sib.previousElementSibling) {
+          if (sib.nodeName.toLowerCase() == selector) nth++;
+        }
+
+        if (nth != 1) {
+          selector += ":nth-of-type("+nth+")";
+        }
+      }
+
+      path.unshift(selector);
+      ele = ele.parentNode;
+    }
+
+    return path.join(" > ");
   }
 }
 
