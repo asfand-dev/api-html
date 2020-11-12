@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { OverPack } from 'rc-scroll-anim';
 import QueueAnim from 'rc-queue-anim';
 import { Button, Input, Select, Tooltip, Checkbox } from 'antd';
-import { FileTextTwoTone, ThunderboltTwoTone, CrownTwoTone, InfoCircleOutlined } from '@ant-design/icons';
+import { FileTextTwoTone, DownloadOutlined, SettingOutlined, InfoCircleOutlined, EyeOutlined } from '@ant-design/icons';
 import ReactGA from 'react-ga';
 
 export default () => {
@@ -19,6 +19,7 @@ export default () => {
   });
 
   const [isAdvance, setIsAdvance] = useState(false);
+  const [childWindow, setChildWindow] = useState(null);
 
   let fields = [
     {
@@ -170,6 +171,26 @@ export default () => {
     },
   ];
 
+  useEffect(() => {
+    const handler = (event) => {
+      const { eventType, value } = event.data;
+      if (eventType === 'customFootScript') {
+        setFieldValue('customFootScript', value);
+      } else if (eventType === 'download') {
+        const url = getUrlWithQuery({ isDownload: true });
+        childWindow.postMessage({ eventType: 'download', value: url }, '*'); 
+      } else if (eventType === 'preview') {
+        const url = getUrlWithQuery();
+        childWindow.postMessage({ eventType, value: url }, '*');
+      }
+    }
+
+    window.addEventListener("message", handler)
+
+    // clean up
+    return () => window.removeEventListener("message", handler);
+  }, [childWindow, fieldValues]);
+
   const setFieldValue = (name, value) => {
     setFieldValues(e => ({ ...e, [name]: value }));
   }
@@ -178,7 +199,7 @@ export default () => {
     Object.keys(obj).map(key => obj[key] ? `${key}=${encodeURIComponent(obj[key])}` : '').filter(e => e).join('&')
   );
 
-  const getQuery = () => {
+  const getQuery = (isEditor = false) => {
     const { 
       url,
       type,
@@ -199,6 +220,10 @@ export default () => {
       }
     }
 
+    if (isEditor) {
+      options.editor = true;
+    }
+
     if (options) {
       values.options = JSON.stringify(options);
     }
@@ -206,22 +231,42 @@ export default () => {
     return objToQuery(values);
   };
 
+  const getUrlWithQuery = (props = {}) => {
+    const { isEditor = false, isDownload = false } = props;
+    const query = getQuery(isEditor);
+
+    return `https://api-html.herokuapp.com/generate-html?${query}${isDownload ? '&download=1' : ''}`
+  }
+
   const previewHandler = () => {
     if (!fieldValues.url) return alert('Please enter a correct Source URL');
-    const query = getQuery();
-    window.open(`https://api-html.herokuapp.com/generate-html?${query}`, '_blank');
+
+    const url = getUrlWithQuery();
+    window.open(url, '_blank');
 
     if (process.env.NODE_ENV === 'production') {
-      ReactGA.pageview(`generate-html?${query}`);
+      ReactGA.pageview(url);
     }
   }
 
   const downloadHandler = () => {
     if (!fieldValues.url) return alert('Please enter a correct Source URL');
-    const query = getQuery();
-    window.open(`https://api-html.herokuapp.com/generate-html?download=1&${query}`, '_blank');
+
+    const url = getUrlWithQuery({ isDownload: true });
+    window.open(url, '_blank');
+
     if (process.env.NODE_ENV === 'production') {
-      ReactGA.pageview(`generate-html?download=1&${query}`);
+      ReactGA.pageview(url);
+    }
+  }
+
+  const customizeTheme = () => {
+    if (!fieldValues.url) return alert('Please enter a correct Source URL');
+    const url = getUrlWithQuery({ isEditor: true });
+    setChildWindow(window.open(url, '_blank', 'width=1200,menubar=no,toolbar=no,location=no,resizable=yes,scrollbars=yes,status=no'));
+
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.pageview(url);
     }
   }
 
@@ -259,14 +304,6 @@ export default () => {
     a.click();
   }
 
-  const customizeTheme = () => {
-    window.open('./editor', '_blank', 'width=1200,menubar=no,toolbar=no,location=no,resizable=yes,scrollbars=yes,status=no');
-
-    window.addEventListener('message', (event) => {
-      setFieldValue('customFootScript', event.data);
-    });
-  }
-
   if (fieldValues.type !== 'swagger') {
     fields = fields.filter(({ swagger = false }) => !swagger);
   }
@@ -274,6 +311,8 @@ export default () => {
   if (!isAdvance) {
     fields = fields.filter(({ advance = false }) => !advance);
   }
+
+  const { theme = '' } = fieldValues;
 
   return (
     <div className="home-page download-section">
@@ -285,75 +324,94 @@ export default () => {
         <OverPack>
           <QueueAnim key="queue" type="bottom" leaveReverse className="zama-section">
             <div key="button" style={{marginTop: 20}}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 5 }}>
+                <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={importOptionsHandler}>Import Options</span>
+                <span style={{ padding: '0 10px' }}>|</span>
+                <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={exportOptionsHandler}>Export Options</span>
+              </div>
               <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', maxWidth: 800}}>
-                  {fields.map(({ name, type, icon, label, tooltip, style, options = [], rows = 5 }) => (
-                    type === 'text' ? (
-                      <Input
-                        key={name}
-                        size="large"
-                        value={fieldValues[name] || ''}
-                        onChange={e => setFieldValue(name, e.target.value)}
-                        placeholder={label}
-                        prefix={icon}
-                        style={{marginTop: 10, ...style}}
-                        suffix={tooltip ? (
-                          <Tooltip title={tooltip}>
-                            <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
-                          </Tooltip>
-                          ): (
-                            null
-                          )
-                        }
-                      />
-                    ) : type === 'select' ? (
-                      <Select
-                        onChange={value => setFieldValue(name, value)}
-                        size="large"
-                        key={name}
-                        placeholder={label}
-                        style={{marginTop: 10, width: '100%', ...style}}
-                        value={fieldValues[name] || ''}
-                      >
-                        <Select.Option key="default" value="">Select {label}</Select.Option>
-                        {options.map(([name, value]) => <Select.Option key={name} value={name}>{value || name}</Select.Option>)}
-                      </Select>
-                    ) : type === 'textarea' ? (
-                      <Input.TextArea
-                        key={name}
-                        size="large"
-                        onChange={e => setFieldValue(name, e.target.value)}
-                        placeholder={label}
-                        style={{marginTop: 10, ...style}}
-                        rows={rows}
-                        value={fieldValues[name]}
-                      />
-                    ) : (
-                      <Checkbox
-                        key={name}
-                        size="large"
-                        onChange={e => setFieldValue(name, e.target.checked)}
-                        checked={fieldValues[name] || false}
-                        style={{marginTop: 10, ...style}}
-                      >{label}</Checkbox>
-                    )
-                  ))}
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 5 }}>
-                  <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={customizeTheme}>
-                    <Tooltip title={<><h3 style={{color: 'white'}}>Important Message!</h3>A new window will be open, where you can customize the UI. <b>Close</b> the <b>editor</b> window once you are done with the changes. The UI changes will be converted to <b>CSS Rules</b> and will be added to the <b>Custom Foot Script</b> field in the <b>Advance Options</b>. <br />You will see the new UI changes in the <b>Preview</b> and <b>Download</b> after closing the <b>Editor</b> window.</>}>Customize Theme</Tooltip>  
-                  </span>
-                  <span style={{ padding: '0 10px' }}>|</span>
-                  <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={exportOptionsHandler}>Export Options</span>
-                  <span style={{ padding: '0 10px' }}>|</span>
-                  <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={importOptionsHandler}>Import Options</span>
-                  <span style={{ padding: '0 10px' }}>|</span>
-                  <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={() => setIsAdvance(!isAdvance)}>Advance Options</span>
-                </div>
+                {fields.map(({ name, type, icon, label, tooltip, style, options = [], rows = 5 }) => (
+                  type === 'text' ? (
+                    <Input
+                      key={name}
+                      size="large"
+                      value={fieldValues[name] || ''}
+                      onChange={e => setFieldValue(name, e.target.value)}
+                      placeholder={label}
+                      prefix={icon}
+                      style={{marginTop: 10, ...style}}
+                      suffix={tooltip ? (
+                        <Tooltip title={tooltip}>
+                          <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                        </Tooltip>
+                        ): (
+                          null
+                        )
+                      }
+                    />
+                  ) : type === 'select' ? (
+                    <Select
+                      onChange={value => setFieldValue(name, value)}
+                      size="large"
+                      key={name}
+                      placeholder={label}
+                      style={{marginTop: 10, width: '100%', ...style}}
+                      value={fieldValues[name] || ''}
+                    >
+                      <Select.Option key="default" value="">Select {label}</Select.Option>
+                      {options.map(([name, value]) => <Select.Option key={name} value={name}>{value || name}</Select.Option>)}
+                    </Select>
+                  ) : type === 'textarea' ? (
+                    <Input.TextArea
+                      key={name}
+                      size="large"
+                      onChange={e => setFieldValue(name, e.target.value)}
+                      placeholder={label}
+                      style={{marginTop: 10, ...style}}
+                      rows={rows}
+                      value={fieldValues[name]}
+                    />
+                  ) : (
+                    <Checkbox
+                      key={name}
+                      size="large"
+                      onChange={e => setFieldValue(name, e.target.checked)}
+                      checked={fieldValues[name] || false}
+                      style={{marginTop: 10, ...style}}
+                    >{label}</Checkbox>
+                  )
+                ))}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 5 }}>
+                {theme === 'compact' && (
+                  <>
+                    <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={customizeTheme}>
+                      <Tooltip title={
+                        <>
+                          <h3 style={{color: 'white'}}>Attention!</h3>
+                          <b>Single Click</b> = <b>Text Edit</b><br />
+                          <b>Double Click</b> = <b>UI Customization</b><br />
+                          A new window will be open, where you can customize the UI or edit the text.<br />
+                          The changes will be converted to <b>CSS & JavaScript</b> and will be added to the <b>Custom Foot Script</b> field in the <b>Advance Options</b>. You can also <b>export</b> the change for later use by using our export functionality.<br />
+                          Once you are done with the changes, Hover over the <b><SettingOutlined /> Settings</b> in the <b>editor</b> window, where you can <b>download</b> or <b>preview</b>.
+                        </>
+                      }>Preview & Customize</Tooltip>  
+                    </span>
+                    <span style={{ padding: '0 10px' }}>|</span>
+                  </> 
+                )}
+                <span
+                  style={{ color: '#1891ff', cursor: 'pointer' }}
+                  onClick={() => setIsAdvance(!isAdvance)}
+                >
+                  Advance Options {isAdvance ? '-' : '+'}
+                </span>
+              </div>
               <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Button onClick={previewHandler} style={{ margin: '0 16px' }} type="primary" ghost>
+                <Button icon={<EyeOutlined />} onClick={previewHandler} style={{ margin: '0 16px' }} type="primary" ghost>
                   Preview
                 </Button>
-                <Button onClick={downloadHandler} type="primary">
+                <Button icon={<DownloadOutlined />} onClick={downloadHandler} type="primary">
                   Download
                 </Button>
               </div>
