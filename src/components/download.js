@@ -325,9 +325,9 @@ export default () => {
           <QueueAnim key="queue" type="bottom" leaveReverse className="zama-section">
             <div key="button" style={{marginTop: 20}}>
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 5 }}>
-                <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={importOptionsHandler}>Import Options</span>
+                <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={importOptionsHandler}>Import</span>
                 <span style={{ padding: '0 10px' }}>|</span>
-                <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={exportOptionsHandler}>Export Options</span>
+                <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={exportOptionsHandler}>Export</span>
               </div>
               <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', maxWidth: 800}}>
                 {fields.map(({ name, type, icon, label, tooltip, style, options = [], rows = 5 }) => (
