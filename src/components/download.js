@@ -235,7 +235,7 @@ export default () => {
     const { isEditor = false, isDownload = false } = props;
     const query = getQuery(isEditor);
 
-    return `https://api-html.herokuapp.com/generate-html?${query}${isDownload ? '&download=1' : ''}`
+    return `https://asfand.dev/api-html/generate-html?${query}${isDownload ? '&download=1' : ''}`
   }
 
   const previewHandler = () => {
