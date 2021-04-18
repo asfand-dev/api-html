@@ -383,7 +383,7 @@ export default () => {
                 ))}
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 5 }}>
-                {theme === 'compact' && (
+                {/* {theme === 'compact' && (
                   <>
                     <span style={{ color: '#1891ff', cursor: 'pointer' }} onClick={customizeTheme}>
                       <Tooltip title={
@@ -399,7 +399,7 @@ export default () => {
                     </span>
                     <span style={{ padding: '0 10px' }}>|</span>
                   </> 
-                )}
+                )} */}
                 <span
                   style={{ color: '#1891ff', cursor: 'pointer' }}
                   onClick={() => setIsAdvance(!isAdvance)}
